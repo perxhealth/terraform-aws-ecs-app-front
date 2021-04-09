@@ -15,8 +15,8 @@ variable "hostname_create" {
   default     = true
 }
 
-variable "hosted_zone" {
-  description = "Existing Hosted Zone domain to add hostnames as DNS records"
+variable "hosted_zones" {
+  description = "Existing Hosted Zones domain to add hostnames as DNS records, should match the array of hostnames"
 }
 
 variable "alb_cloudfront_key" {

@@ -1,11 +1,12 @@
 data "aws_route53_zone" "selected" {
-  name = var.hosted_zone
+  count = length(var.hosted_zones)
+  name  = var.hosted_zones[count.index]
 }
 
 resource "aws_route53_record" "hostname" {
   count = var.hostname_create ? length(var.hostnames) : 0
 
-  zone_id = data.aws_route53_zone.selected.zone_id
+  zone_id = data.aws_route53_zone.selected[count.index].zone_id
   name    = var.hostnames[count.index]
   type    = "CNAME"
   ttl     = "300"
