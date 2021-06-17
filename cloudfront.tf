@@ -14,14 +14,9 @@ resource "aws_cloudfront_distribution" "default" {
       origin_protocol_policy   = "https-only"
       http_port                = 80
       https_port               = 443
-      origin_ssl_protocols     = ["SSLv3", "TLSv1.1", "TLSv1.2", "TLSv1"]
+      origin_ssl_protocols     = ["TLSv1.2"]
       origin_keepalive_timeout = var.cloudfront_origin_keepalive_timeout
       origin_read_timeout      = var.cloudfront_origin_read_timeout
-    }
-
-    custom_header {
-      name  = "fromcloudfront"
-      value = var.alb_cloudfront_key
     }
   }
 
@@ -55,11 +50,6 @@ resource "aws_cloudfront_distribution" "default" {
           name  = custom_header.value.name
           value = custom_header.value.value
         }
-      }
-
-      custom_header {
-        name  = "fromcloudfront"
-        value = var.alb_cloudfront_key
       }
 
       dynamic s3_origin_config {
